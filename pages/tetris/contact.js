@@ -3,17 +3,20 @@ var ws;
 var state = 'wait';
 var tetris_20 = null;
 var socketState = false;
-var others = ['none','none','none']//其他玩家id
-var otherstates = new Map() //其他玩家状态
-var maps = new Map()//其他玩家积木池
+var emptyseat = new Set([1, 2, 3])
+var Room = new Map()
+// var others = ['none','none','none']//其他玩家id
+// var otherstates = new Map() //其他玩家状态
+// var maps = new Map()//其他玩家积木池
 var flueid = parseInt(Math.random() * 1000000000).toString()
 function caniget(st) {
   switch (st) {
     case 'state': { return state }
     case 'tetrris_20': { return tetris_20 }
-    case 'others': { return others }
-    case 'otherstates': { return otherstates }
-    case 'maps': { return maps }
+    case 'Room': { return Room }
+    // case 'others': { return others }
+    // case 'otherstates': { return otherstates }
+    // case 'maps': { return maps }
     default: { return }
   }
 }
@@ -32,7 +35,7 @@ function score(sc) {
 function link() {
   wx.connectSocket({
     url: 'wss://luif.yxsvip.cn',
-    header: { flueid: flueid }
+    header: { flueid: flueid,gamers:2 }
   })
   wx.onSocketOpen(() => {
     console.log('已连接')
@@ -41,15 +44,21 @@ function link() {
     send(outmsg)
   })
   wx.onSocketMessage((message) => {
-    console.log(`[CLIENT]${message}`)
     var immsg = JSON.parse(message.data)
+    console.log(immsg)
     switch (immsg.code) {
       case 'join': {
         console.log(`[CLIENT][${immsg.data}]进来了`)
-        for (let i = 0; i < 3; i++) {
-          if (others[i]!=='none') { others[i]=immsg.data; otherstates.set(immsg.data,'wait');break ;}
+        var player = {
+          flueid: immsg.data,//玩家号
+          seat: null,
+          map: null,//当前的积木池
+          score: null,//分数
+          state: 'wait'//状态
         }
-        console.log(`[CLIENT]目前玩家:${others}`)
+        emptyseat.forEach((key) => { player.seat = key; emptyseat.delete(key); return; })
+        Room.set(player.flueid, player)
+        player = null
         break
       }
       case 'pool': {
@@ -64,8 +73,8 @@ function link() {
         break
       }
       case 'update': {
-        maps.set(immsg.data.flueid, immsg.data.map)
-        otherstates.set(immsg.data.flueid, 'update')
+        Room[immsg.data.flueid].map = immsg.data.map
+        Room[immsg.data.flueid].state = 'update'
         break
       }
       default: { break }
@@ -73,6 +82,7 @@ function link() {
   })
   wx.onSocketClose((close) => {
     socketState = false
+    console.log('连接丢失')
   })
 
 }

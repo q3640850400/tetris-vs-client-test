@@ -55,7 +55,7 @@ Page({
   },
   iscan() {
     for (var i = 0; i < 4; i++)
-      if ((pos.fk[i] & map[pos.y + i]) != 0) { console.log('hit!'); return (pos = bak); }
+      if ((pos.fk[i] & map[pos.y + i]) != 0) { return (pos = bak); }
   },
   rotate(r) {
     var f = dia[pos.s = (pos.s + r) % dia.length];
@@ -101,19 +101,19 @@ Page({
     this.render()
   },
   left() {
-    console.log('left!')
+    // console.log('left!')
     this.move(2, -1)
   },
   right() {
-    console.log('right!')
+    // console.log('right!')
     this.move(0.5, 1)
   },
   up() {
-    console.log('up!')
+    // console.log('up!')
   },
   turn() {
     this.rotate(1)
-    console.log('turn!')
+    // console.log('turn!') 
   },
   restart() {
     longtap = false
@@ -132,15 +132,17 @@ Page({
   render() {
     ctx.clearRect(0, 0, 200, 500)
     // ctx.drawImage('../images/tetris.png',0,0,100,100)
-
     //gv.test()
     gv.renderBackGround(ctx)
     gv.renderGameScore(ctx, player.score)
     gv.renderTetris(ctx, cot, bak)
     gv.renderTetrispool(ctx, map, color)
-    var otherstates = contact.caniget('otherstates')
-    otherstates.forEach((val,key)=>{
-      if (val === 'update') { gv.renderOthers(ctx, (contact.caniget('maps'))[key], color)}
+    var Room=contact.caniget('Room')
+    Room.forEach((player)=>{
+      if(player.state='update'){
+        gv.renderOthers(ctx, player.map, color)
+        player.state='wait'
+      }
     })
     // gv.renderOthers(ctx, map, color)
     ctx.draw()
