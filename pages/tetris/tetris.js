@@ -7,7 +7,7 @@ var longtap = false
 var ctx = wx.createCanvasContext('firstCanvas')
 var player = {
   name: "null",
-  score: 999,
+  score: 0,
   animal: 0
 }
 //地图
@@ -34,10 +34,11 @@ Page({
     contact.link()
   },
   check: function () {
-    console.log(contact.state)
-    switch (contact.state) {
+    var st = contact.caniget('state')
+    switch (st) {
       case 'wait': { break }
-      case 'pool': { tetris_20 = contact.tetris_20; clearInterval(che); this.restart(); }
+      case 'pool': { tetris_20 = contact.tetris_20; contact.setstate('wait');break; }
+      case 'start': { clearInterval(che); this.restart(); contact.setstate('wait'); break; }
       default: { break }
     }
   },
@@ -77,6 +78,7 @@ Page({
           map.unshift(0x801)
         }
       }
+      contact.update(map);
       if (map[0] != 0x801) return this.over();
       this.start();
     }
@@ -86,18 +88,15 @@ Page({
     pos.x += k;
     for (var i = 0; i < 4; i++)pos.fk[i] *= t;
     this.update(this.iscan());
-    //console.log(cot, bak, pos)
   },
   over() {
     document.onkeydown = null;
     clearInterval(run);
     clearInterval(sd);
 
-    //alert("GAME OVER");
   },
   update(t) {
     bak = { fk: pos.fk.slice(0), y: pos.y, x: pos.x, s: pos.s }
-
     if (t) return;
     this.render()
   },
@@ -139,6 +138,12 @@ Page({
     gv.renderGameScore(ctx, player.score)
     gv.renderTetris(ctx, cot, bak)
     gv.renderTetrispool(ctx, map, color)
+    var otherstates = contact.caniget('otherstates')
+    otherstates.forEach((val,key)=>{
+      if (val === 'update') { gv.renderOthers(ctx, (contact.caniget('maps'))[key], color)}
+    })
+    // gv.renderOthers(ctx, map, color)
     ctx.draw()
+    
   }
 })
