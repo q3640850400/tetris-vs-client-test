@@ -1,0 +1,10 @@
+<!-- <canvas style="width: 100%; height: 100%;" canvas-id="firstCanvas"></canvas> -->
+<canvas style="width: 100%; height: 400px" canvas-id="firstCanvas"></canvas>
+<text id="t1">{{t1}}</text>
+<text id="t2">{{t2}}</text>
+<button id="readybtn" type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}" disabled="{{disabled}}" bindtap='readybtn' > ready </button>
+<button id="leftbtn" type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}" disabled="{{disabled}}" bindtap='left' > L </button>
+<button id="rightbtn" type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}" disabled="{{disabled}}" bindtap='right'> R </button>
+<button id="upbtn" type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}" disabled="{{disabled}}"  bindtap='up'> U </button>
+<button id="downbtn" type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}" disabled="{{disabled}}" bindtap='down'> D </button>
+<button id="turnbtn" type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}" disabled="{{disabled}}" bindtap='turn'> turn </button>

@@ -1,0 +1,48 @@
+#t1 {
+  position:absolute;
+  left:60px;
+  top:5px;
+  /* width: 50%; */
+}
+#t2 {
+  position:absolute;
+  left:250px;
+  top:5px;
+  /* width: 50%; */
+}
+#readybtn {
+  position:absolute;
+  left:220px;
+  top:30px;
+  /* width: 50%; */
+}
+#leftbtn {
+  position:absolute;
+  left:20px;
+  top:400px;
+  /* width: 50%; */
+}
+#rightbtn {
+  position:absolute;
+  left:110px;
+  top:400px;
+  /* width: 50%; */
+}
+#upbtn {
+  position:absolute;
+  left:60px;
+  top:400px;
+  /* width: 50%; */
+}
+#downbtn {
+  position:absolute;
+  left:60px;
+  top:450px;
+  /* width: 50%; */
+}
+#turnbtn {
+  position:absolute;
+  left:200px;
+  top:400px;
+  /* width: 50%; */
+}
