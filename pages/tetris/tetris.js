@@ -31,7 +31,8 @@ Page({
   data: {
   },
   readybtn: function () {
-    contact.link()
+    //contact.link()
+    this.restart()
   },
   check: function () {
     var st = contact.caniget('state')
@@ -44,7 +45,7 @@ Page({
   },
   onReady: function (e) {
     // this.restart()
-    che = setInterval(this.check.bind(this), 1000)
+    //che = setInterval(this.check.bind(this), 1000)
   },
   start() {
     cot = ~~(Math.random() * 7)
@@ -119,7 +120,7 @@ Page({
     longtap = false
     this.start();
     // run = setInterval(this.down.bind(this), 5000);
-    sd = setInterval(this.straightdown.bind(this), 100);
+    //sd = setInterval(this.straightdown.bind(this), 100);
     /*window.requestAnimationFrame(
       this.loop.bind(this),
       canvas
@@ -133,17 +134,17 @@ Page({
     ctx.clearRect(0, 0, 200, 500)
     // ctx.drawImage('../images/tetris.png',0,0,100,100)
     //gv.test()
-    gv.renderBackGround(ctx)
-    gv.renderGameScore(ctx, player.score)
+    //gv.renderBackGround(ctx)
+    //gv.renderGameScore(ctx, player.score)
     gv.renderTetris(ctx, cot, bak)
-    gv.renderTetrispool(ctx, map, color)
-    var Room=contact.caniget('Room')
-    Room.forEach((player)=>{
-      if(player.state='update'){
-        gv.renderOthers(ctx, player.map, color)
-        player.state='wait'
-      }
-    })
+    //gv.renderTetrispool(ctx, map, color)
+    //var Room=contact.caniget('Room')
+    // Room.forEach((player)=>{
+    //   if(player.state==='update'){
+    //     gv.renderOthers(ctx, player.map, color)
+    //     player.state='wait'
+    //   }
+    // })
     // gv.renderOthers(ctx, map, color)
     ctx.draw()
     
